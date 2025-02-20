@@ -23,23 +23,13 @@ class ViewController: UIViewController {
 
     @IBAction func counterButtonTapped(_ sender: UIButton) {
         guard let currentNumStr = mainLabel.text else { return }
-        var currentNum = Int(currentNumStr)!
+        let currentNum = Int(currentNumStr)!
+        var counter = Counter(count: currentNum, sender: sender, plusButton: plusButton, minusButton: minusButton)
         
-        if sender.currentTitle == "+" {
-            currentNum += 1
-        } else {
-            currentNum -= 1
-        }
-        mainLabel.text = "\(currentNum)"
+        let count = counter.calculate(sender: sender)
+        mainLabel.text = "\(count)"
         
-        if currentNum >= 10 {
-            plusButton.isEnabled = false
-        } else if currentNum <= -10 {
-            minusButton.isEnabled = false
-        } else {
-            plusButton.isEnabled = true
-            minusButton.isEnabled = true
-        }
+        counter.isActivated(plusButton: plusButton, minusButton: minusButton)
     }
     
     @IBAction func resetButtonTapped(_ sender: UIButton) {
